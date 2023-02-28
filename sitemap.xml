@@ -4,16 +4,28 @@
   <url>
     <loc>/networking/</loc>
   </url><url>
+    <loc>/hacking/notes/</loc>
+  </url><url>
     <loc>/servers/</loc>
   </url><url>
     <loc>/hacking/</loc>
   </url><url>
     <loc>/hardware/</loc>
   </url><url>
+    <loc>/hacking/tryhackme/</loc>
+  </url><url>
     <loc>/</loc>
   </url><url>
     <loc>/categories/</loc>
   </url><url>
+    <loc>/hacking/tryhackme/overpass/</loc>
+  </url><url>
+    <loc>/hacking/notes/privesc/</loc>
+  </url><url>
+    <loc>/hacking/notes/shells/</loc>
+  </url><url>
     <loc>/tags/</loc>
+  </url><url>
+    <loc>/hacking/notes/tunnelling/</loc>
   </url>
 </urlset>

