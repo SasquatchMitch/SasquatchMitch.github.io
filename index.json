@@ -11,7 +11,7 @@
 	"title": "Notes",
 	"tags": [],
 	"description": "",
-	"content": "Notes Privesc Shells Tunnelling "
+	"content": "Notes Privesc\rShells\rTunnelling\r"
 },
 {
 	"uri": "/servers/",
@@ -25,7 +25,7 @@
 	"title": "Hacking",
 	"tags": [],
 	"description": "",
-	"content": "Hacking Notes on some tips and techniques I have picked up working on CTFs\n"
+	"content": "Hacking Notes\rPrivesc\rShells\rTunnelling\rTryHackMe\rOverpass\r"
 },
 {
 	"uri": "/hardware/",
