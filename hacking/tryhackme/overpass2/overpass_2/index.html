@@ -9,7 +9,7 @@
 
     
 
-    <title>About - SasquatchMitch</title>
+    <title>Overpass 2 - SasquatchMitch</title>
 
     
     <link href="/css/nucleus.css?1679103701" rel="stylesheet">
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/">
+  <body class="" data-url="/hacking/tryhackme/overpass2/overpass_2/">
     <nav id="sidebar" class="">
 
 
@@ -126,7 +126,7 @@
   
     
     <li data-nav-id="/hacking/" title="Hacking" class="dd-item
-        
+        parent
         
         
         ">
@@ -254,7 +254,7 @@
   
     
     <li data-nav-id="/hacking/tryhackme/" title="TryHackMe" class="dd-item
-        
+        parent
         
         
         ">
@@ -301,7 +301,7 @@
  
   
     
-      <li data-nav-id="/hacking/tryhackme/overpass2/overpass_2/" title="Overpass 2" class="dd-item ">
+      <li data-nav-id="/hacking/tryhackme/overpass2/overpass_2/" title="Overpass 2" class="dd-item active">
         <a href="/hacking/tryhackme/overpass2/overpass_2/">
         Overpass 2
         
@@ -390,51 +390,113 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                  
+                  
+                  
+                  <div id="top-github-link">
+                    <a class="github-link" title='Edit this page' href="sasquatchmitch.blogHacking/TryHackMe/Overpass2/overpass_2.md" target="blank">
+                      <i class="fas fa-code-branch"></i>
+                      <span id="top-github-link-text">Edit this page</span>
+                    </a>
+                  </div>
+                  
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/'>About</a> > <a href='/hacking/'>Hacking</a> > <a href='/hacking/tryhackme/'>TryHackMe</a> > Overpass 2
+          
+        
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents"></nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Overpass 2
+            </h1>
+          
 
         
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
 
- 
-<h1 id="notes-and-stuff">Notes and Stuff</h1>
-<p>Hi my name is Mitch and this is a site I set up to document the things I have learned setting up my homelab, going through CTFs and working on hardware level projects.
-It is mainly a place I can write down my thoughts and notes while I learn.</p>
-<hr>
-<ul>
-<li><strong>Networking</strong>
-<ul>
-<li>homelab network documentation</li>
-<li>note on networking related certifications</li>
-</ul>
-</li>
-<li><strong>Servers</strong>
-<ul>
-<li>documenting the setup and issues that come up with the servers in my homelab</li>
-</ul>
-</li>
-<li><strong>Hacking</strong>
-<ul>
-<li>CTF writeups</li>
-<li>notes on some tips and techniques I have picked up</li>
-</ul>
-</li>
-<li><strong>Hardware</strong>
-<ul>
-<li>learning about reverse engineering/hardware hacking</li>
-<li>learning about beginner electronics subjects</li>
-</ul>
-</li>
-</ul>
+<p>For this room you start off by analyzing a pcap file.</p>
+<figure><img src="/images/Overpass2_pcap.PNG"/><figcaption>
+            <h4>Pcap file</h4>
+        </figcaption>
+</figure>
+
+<p>Just from looking at the start of the capture we can see that a file was uploaded to the /Development/ page and if you follow the tcp stream you see what code was uploaded</p>
+<figure><img src="/images/follow_pcap.png"/><figcaption>
+            <h4>Code uploaded</h4>
+        </figcaption>
+</figure>
+
+<p>To look at what the attacker was doing on the machine I applied a filter to show the packets with a source port 4242 using &ldquo;tcp.port==4242&rdquo;.
+We can also see James&rsquo; password and what the attacker used for persistence, <a href="https://github.com/NinjaJc01/ssh-backdoor">https://github.com/NinjaJc01/ssh-backdoor</a>.</p>
+<figure><img src="/images/Overpass2_revshell.PNG"/><figcaption>
+            <h4>Attackers Reverse shell</h4>
+        </figcaption>
+</figure>
+
+<p>From here I went to the github repository for the ssh-backdoor in order to find the default hash and hardcoded salt used. To find the hash the attacker used,
+go back to the previous tcp stream and look for where the ./backdoor command was ran. With this we can crack the hash to find out the password.</p>
+
+
+<footer class="footline">
 	
-  
+</footer>
+
         
         </div>
         
@@ -501,6 +563,7 @@ It is mainly a place I can write down my thoughts and notes while I learn.</p>
             
                 
                     
+                    
                 
                 
 
@@ -516,69 +579,8 @@ It is mainly a place I can write down my thoughts and notes while I learn.</p>
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
                         
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -620,6 +622,19 @@ It is mainly a place I can write down my thoughts and notes while I learn.</p>
             
         
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
             
         
                     
@@ -630,6 +645,65 @@ It is mainly a place I can write down my thoughts and notes while I learn.</p>
             
             
                 
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -651,8 +725,10 @@ It is mainly a place I can write down my thoughts and notes while I learn.</p>
 	 
 	 
 		
+			<a class="nav nav-prev" href="/hacking/tryhackme/overpass/" title="Overpass"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/networking/" title="Networking" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/hardware/" title="Hardware" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

